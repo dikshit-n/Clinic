@@ -1,0 +1,57 @@
+.my-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.626);
+  transition: transform 0.5s ease-in-out;
+}
+
+.outer-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent !important;
+  z-index: 100001;
+}
+
+.modal-content {
+  width: fit-content;
+  height: fit-content;
+  border: none;
+  outline: none;
+  z-index: 100002;
+}
+
+/* .close-animation {
+  transform: translateX(200vw);
+}
+
+.open-animation {
+  transform: translateX(0);
+} */
+
+.alert-enter {
+  opacity: 0;
+  /* transform: scale(0.9); */
+}
+.alert-enter-active {
+  opacity: 1;
+  /* transform: translateX(0); */
+  transition: opacity 300ms, transform 300ms;
+}
+.alert-exit {
+  opacity: 1;
+}
+.alert-exit-active {
+  opacity: 0;
+  /* transform: scale(0.9); */
+  transition: opacity 300ms, transform 300ms;
+}

@@ -1,0 +1,44 @@
+.app-spinner {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.app-spinner-logo {
+  width: 120px;
+  height: 80px;
+  margin-top: 20vh;
+  border-radius: 40px;
+}
+
+.progress-bar-container {
+  position: relative;
+  overflow: hidden;
+  width: 130px;
+  height: 2px;
+  background-color: white;
+  margin: 10px auto;
+  border-radius: 3px;
+}
+
+.progress-loader {
+  height: 100%;
+  width: 50px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: tomato;
+  animation: move 2s forwards infinite;
+}
+
+@keyframes move {
+  0% {
+    left: -50px;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: -50px;
+  }
+}

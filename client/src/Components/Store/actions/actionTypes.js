@@ -1,0 +1,5 @@
+export const START_LOGIN = "START_LOGIN";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAILURE = "LOGIN_FAILURE";
+export const SET_TEMPORARY_TOKEN = "SET_TEMPORARY_TOKEN";
+export const SET_VERIFIED = "SET_VERIFIED";

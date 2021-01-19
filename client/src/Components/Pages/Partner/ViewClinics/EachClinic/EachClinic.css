@@ -1,0 +1,8 @@
+.each-request {
+  padding: 10px 20px !important;
+  cursor: pointer;
+}
+
+.each-request-container {
+  margin: 10px 0;
+}

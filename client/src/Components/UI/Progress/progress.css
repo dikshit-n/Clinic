@@ -1,0 +1,11 @@
+.react-outer-progress {
+  background: white;
+  height: 10px;
+  width: 100%;
+}
+
+.react-inner-progress {
+  background: green;
+  height: 100%;
+  transition: all 0.5s ease;
+}

@@ -1,0 +1,29 @@
+import React from "react";
+import Col from "reactstrap/lib/Col";
+import AsyncButton from "../../../../UI/AsyncButton/AsyncButton";
+import MyCard from "../../../../UI/MyCard/MyCard";
+import "./EachClinic.css";
+
+const EachClinic = (props) => {
+  return (
+    <Col lg="6" md="6" sm="12" className="each-request-container">
+      <MyCard
+        className="hover-grow each-request d-flex justify-content-between"
+        onClick={props.onClick}
+      >
+        {props.clinicName}
+        <br />
+        {props.location}
+        <AsyncButton
+          type="button"
+          className="bg-blue white"
+          onClick={props.onClick}
+        >
+          View
+        </AsyncButton>
+      </MyCard>
+    </Col>
+  );
+};
+
+export default EachClinic;

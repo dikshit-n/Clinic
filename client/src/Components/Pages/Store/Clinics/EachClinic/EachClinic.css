@@ -1,0 +1,10 @@
+.each-user-clinic {
+  padding: 5px 10px;
+  min-width: 310px;
+  min-height: 100px;
+  margin: 20px;
+}
+
+.light-black {
+  color: rgb(186, 135, 135) !important;
+}
