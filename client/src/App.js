@@ -8,6 +8,7 @@ import Logout from "./Components/Pages/Auth/Logout/Logout";
 import PageShell from "./Components/UI/PageShell/PageShell";
 import { axiosInstance } from "./Components/Utility/axiosInstance";
 import AppSpinner from "./Components/UI/AppSpinner/AppSpinner";
+import HomePage from "./Components/Pages/HomePage/HomePage";
 
 const LazySuperadmin = lazy(() =>
   import("./Components/Pages/Superadmin/Superadmin")
@@ -48,6 +49,7 @@ function App(props) {
   useEffect(() => {
     if (
       !window.location.href.includes("/auth") &&
+      !window.location.href.includes("/home") &&
       !window.location.href.includes("/verify")
     ) {
       localStorage.setItem("route", props.location.pathname);
@@ -61,8 +63,8 @@ function App(props) {
 
   let routes = (
     // <Route path="/" render={(props) => <LazySuperadmin {...props} />} />
-    <Route path="/" render={(props) => <LazyPartner {...props} />} />
-    // <Route path="/" render={(props) => <LazyStore {...props} />} />
+    // {/* <Route path="/" render={(props) => <LazyPartner {...props} />} /> */}
+    <Route path="/" render={(props) => <LazyStore {...props} />} />
   );
 
   // if (props.userType === "partner") {
@@ -88,6 +90,7 @@ function App(props) {
           <Switch>
             <Route path="/verifytoken/:token" component={VerificationPage} />
             <Route path="/logout" component={PageShell(Logout)} />
+            <Route path="/home" component={PageShell(HomePage)} />
             {props.auth ? (
               <Fragment>
                 {routes}
@@ -110,8 +113,8 @@ function App(props) {
 
 const mapStateToProps = (state) => {
   return {
-    auth: true,
-    // auth: state.login.token !== null && state.login.token !== undefined,
+    // auth: true,
+    auth: state.login.token !== null && state.login.token !== undefined,
     verified: state.login.verified,
     loading: state.login.loading,
     userType: state.login.userType,

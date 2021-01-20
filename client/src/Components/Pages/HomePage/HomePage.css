@@ -1,0 +1,15 @@
+/* .homepage{
+    background-image: ;
+} */
+
+.login-button {
+  position: absolute;
+  top: 50px;
+  right: 50px;
+}
+
+.homepage {
+  background-image: url("../../../assets/images/home-page-bg.jpg");
+  background-size: cover;
+  background-position: center;
+}

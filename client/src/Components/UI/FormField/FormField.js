@@ -19,7 +19,9 @@ const EachField = (props) => {
       case "text":
         return (
           <FormGroup style={{ textAlign: "left" }}>
-            <Label for={id}>{props.displayName}</Label>
+            {props.displayName ? (
+              <Label for={id}>{props.displayName}</Label>
+            ) : null}
             {props.addon ? (
               <InputGroup>
                 <InputGroupAddon addonType={props.addon.type}>
@@ -61,7 +63,9 @@ const EachField = (props) => {
       case "textarea":
         return (
           <FormGroup style={{ textAlign: "left" }}>
-            <Label for={id}>{props.displayName}</Label>
+            {props.displayName ? (
+              <Label for={id}>{props.displayName}</Label>
+            ) : null}
             {props.addon ? (
               <InputGroup>
                 <InputGroupAddon addonType={props.addon.type}>
@@ -103,7 +107,9 @@ const EachField = (props) => {
       case "select":
         return (
           <FormGroup style={{ textAlign: "left" }}>
-            <Label for={id}>{props.displayName}</Label>
+            {props.displayName ? (
+              <Label for={id}>{props.displayName}</Label>
+            ) : null}
             {props.addon ? (
               <InputGroup>
                 <InputGroupAddon addonType={props.addon.type}>
@@ -137,7 +143,9 @@ const EachField = (props) => {
       case "number":
         return (
           <FormGroup style={{ textAlign: "left" }}>
-            <Label for={id}>{props.displayName}</Label>
+            {props.displayName ? (
+              <Label for={id}>{props.displayName}</Label>
+            ) : null}
             {props.addon ? (
               <InputGroup>
                 <InputGroupAddon addonType={props.addon.type}>
@@ -180,7 +188,9 @@ const EachField = (props) => {
       case "date":
         return (
           <FormGroup style={{ textAlign: "left" }}>
-            <Label for={id}>{props.displayName}</Label>
+            {props.displayName ? (
+              <Label for={id}>{props.displayName}</Label>
+            ) : null}
             {props.addon ? (
               <InputGroup>
                 <InputGroupAddon addonType={props.addon.type}>
@@ -222,7 +232,9 @@ const EachField = (props) => {
       default:
         return (
           <FormGroup style={{ textAlign: "left" }}>
-            <Label for={id}>{props.displayName}</Label>
+            {props.displayName ? (
+              <Label for={id}>{props.displayName}</Label>
+            ) : null}
             {props.addon ? (
               <InputGroup>
                 <InputGroupAddon addonType={props.addon.type}>

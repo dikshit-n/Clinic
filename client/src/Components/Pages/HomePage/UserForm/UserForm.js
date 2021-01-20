@@ -9,9 +9,9 @@ import { imageToPdf } from "../../../Utility/base64ToPdf";
 import { compressImage } from "../../../Utility/CompressImage";
 import { filterNumbers } from "../../../Utility/filterNumbers";
 import { processImage } from "../../../Utility/processImage";
-import "./ClinicDetails.css";
+import "./UserForm.css";
 
-const ClinicDetails = (props) => {
+const UserForm = (props) => {
   const [alertInfo, setAlertInfo] = useState({
     type: "",
     message: "",
@@ -22,37 +22,12 @@ const ClinicDetails = (props) => {
   const [error, setError] = useState(null);
 
   const [formData, setFormData] = useState({
-    clinicName: "",
+    name: "",
     password: "",
     email: "",
     contactNumber: "",
-    address: "",
-    workingTime: "",
+    gender: "",
   });
-
-  const inputRef = useRef();
-
-  const [proof, setProof] = useState(null);
-  const [processing, setProcessing] = useState(false);
-  const [fileName, setFileName] = useState("");
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = () => {
-    setLoading(true);
-    axiosInstance
-      .post("/getprofile")
-      .then((res) => {
-        console.log(res.data);
-        setFormData({ ...res.data });
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-  };
 
   const changeHandler = ({ target: { value, name } }) => {
     let numberTypes = ["contactNumber"];
@@ -67,19 +42,16 @@ const ClinicDetails = (props) => {
   };
 
   const valid = () => {
-    return (
-      Object.values(formData).every((el) => el.toString().trim() !== "") &&
-      proof !== null
-    );
+    return Object.values(formData).every((el) => el.toString().trim() !== "");
   };
 
   var schema = [
     {
-      displayName: "Clinic Name",
+      displayName: "Name",
       value: formData.clinicName,
       onChange: changeHandler,
       required: true,
-      name: "clinicName",
+      name: "name",
     },
     {
       displayName: "Password",
@@ -96,6 +68,15 @@ const ClinicDetails = (props) => {
       name: "email",
     },
     {
+      displayName: "Gender",
+      options: ["Male", "Female", "Non-Binary"],
+      type: "select",
+      value: formData.gender,
+      onChange: (value) => setFormData((prev) => ({ ...prev, gender: value })),
+      required: true,
+      name: "gender",
+    },
+    {
       displayName: "Contact Number",
       value: formData.contactNumber,
       onChange: changeHandler,
@@ -103,27 +84,11 @@ const ClinicDetails = (props) => {
       required: true,
       name: "contactNumber",
     },
-    {
-      displayName: "Address",
-      type: "textarea",
-      value: formData.address,
-      onChange: changeHandler,
-      required: true,
-      name: "address",
-    },
-    {
-      displayName: "Working Time",
-      value: formData.workingTime,
-      onChange: changeHandler,
-      required: true,
-      name: "workingTime",
-      placeholder: "eg: 9:00am to 10:00pm",
-    },
   ];
 
   const submitHandler = (event) => {
     event.preventDefault();
-    let submitData = { ...formData, proof: proof };
+    let submitData = { ...formData };
     console.log(submitData);
     // setSubmitting(true);
     // axiosInstance
@@ -132,7 +97,7 @@ const ClinicDetails = (props) => {
     //     console.log(res.data);
     //     setSubmitting(false);
     //     setAlertInfo({
-    //       type: "success",
+    //       type: "Account Created !",
     //       message: "Deleted ",
     //       show: true,
     //     });
@@ -157,64 +122,23 @@ const ClinicDetails = (props) => {
     setError(null);
   };
 
-  const checkForErrors = (file) => {
-    const supportedFormats = ["pdf", "PDF"];
-    return !supportedFormats.some((el) => file.name.endsWith(el));
-  };
-
-  const imageChangeHandler = (event) => {
-    let file = event.target.files[0];
-    setError(null);
-    if (file) {
-      let error = checkForErrors(file);
-      if (error) {
-        setFileName("");
-        setProof(null);
-        return setError("Invalid Format. Choose only PDF");
-      } else {
-        setFileName(file.name);
-        setProcessing(true);
-        processImage(file, (extractedData) => {
-          setProof(extractedData);
-          setProcessing(false);
-        });
-      }
-    }
-  };
-
   return loading ? (
     <Spinner />
   ) : (
-    <MyCard>
+    <MyCard title="User Account Creation" style={{ width: "80%" }}>
+      <AsyncButton
+        type="button"
+        onClick={() => props.close()}
+        className="bg-red white"
+      >
+        <i className="fa fa-chevron-left" /> &nbsp;&nbsp;Back
+      </AsyncButton>
       <br />
       <Alert {...alertInfo} hideAlert={hideAlert} />
       <form onSubmit={submitHandler}>
         {schema.map((el, index) => (
           <EachField {...el} key={index} />
         ))}
-        <div className="flex-row">
-          <AsyncButton
-            type="button"
-            className={
-              "bg-light-blue-gradient white " +
-              (processing ? "skeleton-loading" : "")
-            }
-            onClick={() => inputRef.current.click()}
-          >
-            Upload Certificate
-          </AsyncButton>
-          &nbsp;&nbsp;&nbsp;
-          <p style={{ color: "green" }}>{fileName}</p>
-        </div>
-        <p style={{ color: "coral" }}>{error}</p>
-        <input
-          disabled={processing || loading || submitting}
-          ref={inputRef}
-          type="file"
-          style={{ display: "none" }}
-          onChange={imageChangeHandler}
-        />
-        <br />
         <br />
         <AsyncButton
           disabled={!valid()}
@@ -229,4 +153,4 @@ const ClinicDetails = (props) => {
   );
 };
 
-export default ClinicDetails;
+export default UserForm;

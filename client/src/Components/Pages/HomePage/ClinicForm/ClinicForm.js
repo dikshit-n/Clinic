@@ -9,9 +9,9 @@ import { imageToPdf } from "../../../Utility/base64ToPdf";
 import { compressImage } from "../../../Utility/CompressImage";
 import { filterNumbers } from "../../../Utility/filterNumbers";
 import { processImage } from "../../../Utility/processImage";
-import "./ClinicDetails.css";
+import "./ClinicForm.css";
 
-const ClinicDetails = (props) => {
+const ClinicForm = (props) => {
   const [alertInfo, setAlertInfo] = useState({
     type: "",
     message: "",
@@ -36,24 +36,6 @@ const ClinicDetails = (props) => {
   const [processing, setProcessing] = useState(false);
   const [fileName, setFileName] = useState("");
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = () => {
-    setLoading(true);
-    axiosInstance
-      .post("/getprofile")
-      .then((res) => {
-        console.log(res.data);
-        setFormData({ ...res.data });
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-  };
-
   const changeHandler = ({ target: { value, name } }) => {
     let numberTypes = ["contactNumber"];
     if (numberTypes.includes(name)) {
@@ -75,28 +57,28 @@ const ClinicDetails = (props) => {
 
   var schema = [
     {
-      displayName: "Clinic Name",
+      placeholder: "Clinic Name",
       value: formData.clinicName,
       onChange: changeHandler,
       required: true,
       name: "clinicName",
     },
     {
-      displayName: "Password",
+      placeholder: "Password",
       value: formData.password,
       onChange: changeHandler,
       required: true,
       name: "password",
     },
     {
-      displayName: "Email",
+      placeholder: "Email",
       value: formData.email,
       onChange: changeHandler,
       required: true,
       name: "email",
     },
     {
-      displayName: "Contact Number",
+      placeholder: "Contact Number",
       value: formData.contactNumber,
       onChange: changeHandler,
       type: "text",
@@ -104,7 +86,7 @@ const ClinicDetails = (props) => {
       name: "contactNumber",
     },
     {
-      displayName: "Address",
+      placeholder: "Address",
       type: "textarea",
       value: formData.address,
       onChange: changeHandler,
@@ -112,12 +94,12 @@ const ClinicDetails = (props) => {
       name: "address",
     },
     {
-      displayName: "Working Time",
+      //   placeholder: "Working Time",
       value: formData.workingTime,
       onChange: changeHandler,
       required: true,
       name: "workingTime",
-      placeholder: "eg: 9:00am to 10:00pm",
+      placeholder: "Working Time eg: 9:00am to 10:00pm",
     },
   ];
 
@@ -127,7 +109,7 @@ const ClinicDetails = (props) => {
     console.log(submitData);
     // setSubmitting(true);
     // axiosInstance
-    //   .post("/updateprofile", submitData)
+    //   .post("/requestclinic", {...submitData})
     //   .then((res) => {
     //     console.log(res.data);
     //     setSubmitting(false);
@@ -185,7 +167,14 @@ const ClinicDetails = (props) => {
   return loading ? (
     <Spinner />
   ) : (
-    <MyCard>
+    <MyCard style={{ width: "80%" }}>
+      <AsyncButton
+        type="button"
+        onClick={() => props.close()}
+        className="bg-red white"
+      >
+        <i className="fa fa-chevron-left" /> &nbsp;&nbsp;Back
+      </AsyncButton>
       <br />
       <Alert {...alertInfo} hideAlert={hideAlert} />
       <form onSubmit={submitHandler}>
@@ -229,4 +218,4 @@ const ClinicDetails = (props) => {
   );
 };
 
-export default ClinicDetails;
+export default ClinicForm;
