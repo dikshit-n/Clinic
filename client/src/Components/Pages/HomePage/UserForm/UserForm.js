@@ -105,6 +105,7 @@ const UserForm = (props) => {
         });
       })
       .catch((err) => {
+        console.log(err);
         setAlertInfo({
           type: "error",
           message: "Something went wrong !",
