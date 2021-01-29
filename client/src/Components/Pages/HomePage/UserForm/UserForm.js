@@ -94,7 +94,7 @@ const UserForm = (props) => {
     console.log(submitData);
     setSubmitting(true);
     axiosInstance
-      .post("/giri/project", submitData)
+      .post("/giri/adding", submitData)
       .then((res) => {
         console.log(res.data);
         setSubmitting(false);
