@@ -58,10 +58,12 @@ const UserForm = (props) => {
       value: formData.password,
       onChange: changeHandler,
       required: true,
+      type: "password",
       name: "password",
     },
     {
       displayName: "Email",
+      type: "email",
       value: formData.email,
       onChange: changeHandler,
       required: true,
@@ -90,27 +92,27 @@ const UserForm = (props) => {
     event.preventDefault();
     let submitData = { ...formData };
     console.log(submitData);
-    // setSubmitting(true);
-    // axiosInstance
-    //   .post("/updateprofile", submitData)
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     setSubmitting(false);
-    //     setAlertInfo({
-    //       type: "Account Created !",
-    //       message: "Deleted ",
-    //       show: true,
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     setAlertInfo({
-    //       type: "error",
-    //       message: "Something went wrong !",
-    //       show: true,
-    //     });
-    //     setSubmitting(false);
-    //     setError(true);
-    //   });
+    setSubmitting(true);
+    axiosInstance
+      .post("/giri/project", submitData)
+      .then((res) => {
+        console.log(res.data);
+        setSubmitting(false);
+        setAlertInfo({
+          type: "Account Created !",
+          message: "Deleted ",
+          show: true,
+        });
+      })
+      .catch((err) => {
+        setAlertInfo({
+          type: "error",
+          message: "Something went wrong !",
+          show: true,
+        });
+        setSubmitting(false);
+        setError(true);
+      });
   };
 
   const hideAlert = () => {

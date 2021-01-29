@@ -67,11 +67,13 @@ const ClinicForm = (props) => {
       placeholder: "Password",
       value: formData.password,
       onChange: changeHandler,
+      type: "password",
       required: true,
       name: "password",
     },
     {
       placeholder: "Email",
+      type: "email",
       value: formData.email,
       onChange: changeHandler,
       required: true,
@@ -107,27 +109,27 @@ const ClinicForm = (props) => {
     event.preventDefault();
     let submitData = { ...formData, proof: proof };
     console.log(submitData);
-    // setSubmitting(true);
-    // axiosInstance
-    //   .post("/requestclinic", {...submitData})
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     setSubmitting(false);
-    //     setAlertInfo({
-    //       type: "success",
-    //       message: "Deleted ",
-    //       show: true,
-    //     });
-    //   })
-    //   .catch((err) => {
-    //     setAlertInfo({
-    //       type: "error",
-    //       message: "Something went wrong !",
-    //       show: true,
-    //     });
-    //     setSubmitting(false);
-    //     setError(true);
-    //   });
+    setSubmitting(true);
+    axiosInstance
+      .post("/giri/project", { ...submitData })
+      .then((res) => {
+        console.log(res.data);
+        setSubmitting(false);
+        setAlertInfo({
+          type: "success",
+          message: "Deleted ",
+          show: true,
+        });
+      })
+      .catch((err) => {
+        setAlertInfo({
+          type: "error",
+          message: "Something went wrong !",
+          show: true,
+        });
+        setSubmitting(false);
+        setError(true);
+      });
   };
 
   const hideAlert = () => {
