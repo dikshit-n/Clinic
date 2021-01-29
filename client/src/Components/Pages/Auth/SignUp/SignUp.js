@@ -43,7 +43,7 @@ const SignUp = (props) => {
     event.preventDefault();
     setLoading(true);
     axiosInstance
-      .post("/createaccount", { ...formData, token: props.token })
+      .post("/giri/project", { ...formData, token: props.token })
       .then((res) => {
         console.log(res);
         setLoading(false);
