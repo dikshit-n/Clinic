@@ -35,7 +35,7 @@ const SignIn = (props) => {
     event.preventDefault();
     setLoading(true);
     axiosInstance
-      .post("/login", formData)
+      .post("/giri/project", formData)
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
