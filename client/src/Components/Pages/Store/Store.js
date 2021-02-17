@@ -9,8 +9,7 @@ import "./Store.css";
 
 const Store = (props) => {
   var storeSidebar = [
-    { name: "Clinics", to: "/clinics", initialActive: true },
-    { name: "Appointments", to: "/appointments" },
+    { name: "Courses", to: "/clinics", initialActive: true },
     { name: "LOGOUT", to: "/logout" },
   ];
   return (

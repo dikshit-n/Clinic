@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Redirect, Route, Switch } from "react-router";
-import PageShell from "../../UI/PageShell/PageShell";
 import "./Auth.css";
 import SignIn from "./SignIn/SignIn";
 import SignUp from "./SignUp/SignUp";

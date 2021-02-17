@@ -3,7 +3,7 @@ import "./App.css";
 import { Redirect, Route, Switch, withRouter } from "react-router";
 import { connect } from "react-redux";
 import VerificationPage from "./Components/Pages/Auth/VerificationPage/VerificationPage";
-import { checkAuthStatus } from "./Components/Store/actions";
+// import { checkAuthStatus } from "./Components/Store/actions";
 import Logout from "./Components/Pages/Auth/Logout/Logout";
 import PageShell from "./Components/UI/PageShell/PageShell";
 import { axiosInstance } from "./Components/Utility/axiosInstance";
@@ -26,10 +26,10 @@ function App(props) {
 
   const [show, setShow] = useState(false);
 
-  useEffect(async () => {
-    if (!window.location.href.includes("verifytoken"))
-      await props.checkAuthStatus();
-  }, []);
+  // useEffect(async () => {
+  //   // if (!window.location.href.includes("verifytoken"))
+  //   //   await props.checkAuthStatus();
+  // }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -90,7 +90,7 @@ function App(props) {
           <Switch>
             <Route path="/verifytoken/:token" component={VerificationPage} />
             <Route path="/logout" component={PageShell(Logout)} />
-            <Route path="/home" component={PageShell(HomePage)} />
+            {/* <Route path="/home" component={PageShell(HomePage)} /> */}
             {props.auth ? (
               <Fragment>
                 {routes}
@@ -124,7 +124,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    checkAuthStatus: () => dispatch(checkAuthStatus()),
+    checkAuthStatus: () => dispatch(() => {}),
+    // checkAuthStatus: () => dispatch(checkAuthStatus()),
   };
 };
 

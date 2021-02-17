@@ -4,11 +4,12 @@ import MyCard from "../../../UI/MyCard/MyCard";
 import "./SignIn.css";
 import FormInfo from "../../../UI/FormInfo/FormInfo";
 import { loginSuccess } from "../../../Store/actions";
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import AsyncButton from "../../../UI/AsyncButton/AsyncButton";
 import { deleteCookie, setCookie } from "../../../Utility/cookies";
 import { axiosInstance } from "../../../Utility/axiosInstance";
 import SmallSpinner from "../../../UI/SmallSpinner/SmallSpinner";
+import { useHistory } from "react-router";
 
 const SignIn = (props) => {
   const [formData, setFormData] = useState({
@@ -25,6 +26,8 @@ const SignIn = (props) => {
       [name]: value,
     }));
   };
+  const dispatch = useDispatch();
+  const { push } = useHistory();
 
   const valid = () => {
     let requiredFields = [formData.email, formData.password];
@@ -35,17 +38,21 @@ const SignIn = (props) => {
     event.preventDefault();
     setLoading(true);
     axiosInstance
-      .post("/giri/project", formData)
+      .post("/login", formData)
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
+          setCookie("email", formData.email);
+          setCookie("password", formData.password);
           const setToken = async () => {
             await setCookie("token", res.data.token, {
               expires: new Date(3030, 0, 1).toUTCString(),
             });
             console.log(new Date(3030, 0, 1).toUTCString());
             setTimeout(() => {
-              window.location.reload();
+              // window.location.reload();
+              dispatch(loginSuccess(res.data.token, res.data));
+              push("/clinics");
             }, 100);
           };
           setToken();

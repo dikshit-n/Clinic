@@ -8,6 +8,7 @@ const initialState = {
   email: null,
   loading: false,
   logo: null,
+  data: {},
 };
 
 const loginReducer = (state = initialState, actions) => {
@@ -15,10 +16,8 @@ const loginReducer = (state = initialState, actions) => {
     case actionTypes.LOGIN_SUCCESS:
       return {
         ...state,
-        token: actions.token,
-        userType: actions.userType,
-        loading: false,
-        logo: actions.logo,
+        token: "bla",
+        data: actions.data,
       };
     case actionTypes.SET_VERIFIED:
       return {

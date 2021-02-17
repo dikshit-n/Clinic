@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import MyDropDown from "../../../UI/DropDown/DropDown";
 import EachField from "../../../UI/FormField/FormField";
 import MyCard from "../../../UI/MyCard/MyCard";
@@ -13,44 +14,22 @@ let country_state_district = require("country_state_district");
 let districts = country_state_district.getDistrictsByStateId(32);
 
 const Clinics = (props) => {
-  const [district, setDistrict] = useState("All");
+  const [college, setCollege] = useState(null);
+  const [courses, setCourses] = useState([]);
   const [show, setShow] = useState(false);
-  const [clinics, setClinics] = useState([
-    {
-      clinicName: "Dinesh Clinics",
-      doctorName: "Dr.Dinesh kumar",
-      workingHours: "9:00am to 10:00pm",
-      location: "Namakkal",
-    },
-    {
-      clinicName: "Giri Clinics",
-      doctorName: "Dr.Giri Sukesh",
-      workingHours: "9:00am to 10:00pm",
-      location: "Namakkal",
-    },
-    {
-      clinicName: "Hari Clinics",
-      doctorName: "Dr.Hari Hara Suthan",
-      workingHours: "9:00am to 10:00pm",
-      location: "Namakkal",
-    },
-    {
-      clinicName: "Aakash Clinics",
-      doctorName: "Dr.Aakash Don",
-      workingHours: "9:00am to 10:00pm",
-    },
-  ]);
+  const { data } = useSelector((state) => state.login);
+  const [colleges, setColleges] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
     axiosInstance
-      .post("/getallclinics")
+      .get("/college/list")
       .then((res) => {
         console.log(res.data);
         setLoading(false);
-        setClinics([...res.data]);
+        setColleges([...res.data]);
       })
       .catch((err) => {
         console.log(err);
@@ -60,54 +39,68 @@ const Clinics = (props) => {
       });
   }, []);
 
-  const getClinics = () => {
-    let filteredClinics = [...clinics];
-    if (district === "All") {
-      return [...filteredClinics];
-    } else {
-      return [...filteredClinics.filter((el) => el.location === district)];
-    }
+  const getCourses = (id) => {
+    setShow(true);
+    setLoading(true);
+    axiosInstance
+      .get(`college/${id}`)
+      .then((res) => {
+        console.log(res.data);
+        setLoading(false);
+        setCourses([...res.data]);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+        // setClinics([]);
+        // setError(true);
+      });
   };
 
-  let afterFilter = getClinics();
-
+  let afterFilter = data.registeredCourses;
+  console.log(data);
   return loading ? (
     <Spinner />
   ) : error ? (
     <MyCard>Something went wrong !</MyCard>
-  ) : afterFilter.length === 0 ? (
+  ) : afterFilter.length === 0 && !show ? (
     <>
       <EachField
         type="select"
-        name="district"
-        onChange={(value, name) => setDistrict(value)}
-        options={[...districts.map((el) => el.name)]}
-        value={district}
-        placeholder="Choose Location"
+        name="college"
+        onChange={(value, name) => {
+          setCollege(value);
+          getCourses(colleges.find((el) => el.name === value)?.collegeId);
+        }}
+        options={[...colleges.map((el) => `${el.name}`)]}
+        // options={[...districts.map((el) => el.name)]}
+        value={college}
+        placeholder="Choose College"
       />
       <MyCard>
-        <h4>No Clinics Found !</h4>
+        <h4>No Courses Found !</h4>
       </MyCard>
     </>
   ) : show ? (
-    <AppointmentForm close={() => setShow(false)} />
-  ) : (
     <>
       <EachField
         type="select"
-        name="district"
-        onChange={(value, name) => setDistrict(value)}
-        options={[...districts.map((el) => el.name)]}
-        value={district}
+        name="college"
+        onChange={(value, name) => {
+          setCollege(value);
+          getCourses(colleges.find((el) => el.name === value)?.collegeId);
+        }}
+        options={[...colleges.map((el) => `${el.name}`)]}
+        value={college}
         placeholder="Choose Location"
       />
       <div className="flex-row flex-wrap">
-        {afterFilter.map((el, index) => (
-          <EachClinic {...el} key={index} onClick={() => setShow(true)} />
+        {courses.map((el, index) => (
+          <EachClinic {...el} key={index} />
         ))}
       </div>
     </>
-  );
+  ) : null;
 };
 
 export default Clinics;

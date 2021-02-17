@@ -2,12 +2,11 @@ import * as actionTypes from "./actionTypes";
 import { getCookie, setCookie } from "../../Utility/cookies";
 import { axiosInstance } from "../../Utility/axiosInstance";
 
-export const loginSuccess = (token, userType, logo) => {
+export const loginSuccess = (token, data) => {
   return {
     type: actionTypes.LOGIN_SUCCESS,
     token: token,
-    userType: userType,
-    logo: logo ? logo : null,
+    data,
   };
 };
 export const loginFailure = () => {
@@ -37,34 +36,39 @@ export const start = () => {
   };
 };
 
-export const checkAuthStatus = () => {
-  var token = getCookie("token");
-  return (dispatch) => {
-    if (
-      token === null ||
-      token === "null" ||
-      token === "" ||
-      token === undefined
-    ) {
-      return dispatch(loginFailure());
-    }
-    dispatch(start());
-    axiosInstance
-      .post("/checkauthstatus", { token: token })
-      .then((res) => {
-        if (res.status === 200) {
-          dispatch(loginSuccess(res.data.token, res.data.type, res.data.logo));
-          setCookie("token", res.data.token, {
-            expires: new Date(3030, 0, 1).toUTCString(),
-          });
-          console.log(new Date(3030, 0, 1).toUTCString());
-        } else {
-          dispatch(loginFailure());
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        dispatch(loginFailure());
-      });
-  };
-};
+// export const checkAuthStatus = () => {
+//   var token = getCookie("token");
+//   var email = getCookie("email");
+//   var password = getCookie("password");
+//   return (dispatch) => {
+//     if (
+//       token === null ||
+//       token === "null" ||
+//       token === "" ||
+//       token === undefined
+//     ) {
+//       return dispatch(loginFailure());
+//     }
+//     dispatch(start());
+//     axiosInstance
+//       .post("/login", { email, password })
+//       .then((res) => {
+//         console.log(res.data);
+//         if (res.status === 200) {
+//           dispatch(loginSuccess(res.data.token, res.data.type, res.data.logo));
+//           setCookie("token", res.data.token, {
+//             expires: new Date(3030, 0, 1).toUTCString(),
+//           });
+//           console.log(new Date(3030, 0, 1).toUTCString());
+//         } else {
+//           dispatch(loginFailure());
+//         }
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//         dispatch(loginFailure());
+//       });
+//   };
+// };
+
+// dispatch(loginSuccess(res.data.token, res.data.type, res.data.logo));
